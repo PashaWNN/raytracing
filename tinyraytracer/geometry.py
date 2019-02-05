@@ -1,4 +1,5 @@
-from numbers import Number
+from numpy import sqrt
+
 
 x, y, z, w = 0, 1, 2, 3
 
@@ -34,6 +35,14 @@ class Vector:
             return
         super().__setattr__(item, value)
 
+    def normalize(self):
+        return self.__class__(*[i/self.norm() for i in self.arr])
+
+    def norm(self):
+        sum = 0
+        for i in self.arr:
+            sum += i ** 2
+        return sqrt(sum)
 
     def __init__(self, *args):
         self.arr = [0] * self.size
@@ -47,7 +56,7 @@ class Vector:
 
     def __setitem__(self, item: int, value):
         assert 0 <= item < self.size
-        assert isinstance(value, self.t)
+        #assert isinstance(value, self.t)
         self.arr[item] = value
 
     def __mul__(self, other):
@@ -56,7 +65,7 @@ class Vector:
             for i in range(self.size):
                 new += self[i] * other[i]
             return new
-        elif isinstance(other, self.t):
+        else:
             new = self.__class__()
             for i in range(self.size):
                 new[i] = self[i] * other
@@ -76,7 +85,7 @@ class Vector:
             new[i] = self[i] + other[i]
         return new
 
-    def __invert__(self):
+    def __neg__(self):
         return self*-1
 
     def cross(self, v1, v2):

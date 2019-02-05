@@ -1,4 +1,5 @@
 from numpy import sqrt
+from copy import copy
 
 
 x, y, z, w = 0, 1, 2, 3
@@ -45,6 +46,14 @@ class Vector:
         return sqrt(sum)
 
     def __init__(self, *args):
+        if len(args) == 1:
+            if isinstance(args[0], self.__class__):
+                self.arr = copy(args[0].arr)
+                return
+            if type(args[0]) in (list, tuple):
+                assert len(args[0]) == self.size
+                self.arr = list(args[0])
+                return
         self.arr = [0] * self.size
         assert len(args) <= self.size
         for i, arg in enumerate(args):

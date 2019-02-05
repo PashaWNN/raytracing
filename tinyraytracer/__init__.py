@@ -1,26 +1,32 @@
 from .geometry import Vec3f, Vec4f
 from PIL import Image
+from sys import stderr
 from numpy import reshape, sqrt, tan, pi
+from typing import Union, Iterable
+
+
+vec3ftype = Union[Vec3f, Iterable[float]]
+vec4ftype = Union[Vec4f, Iterable[float]]
 
 
 class Light:
-    def __init__(self, position: Vec3f, intencity: float):
-        self.position = position
+    def __init__(self, position: vec3ftype, intencity: float):
+        self.position = Vec3f(position)
         self.intencity = intencity
 
 
 class Material:
-    def __init__(self, color: Vec3f, albedo = Vec4f(1,0,0,0), specular=1.5, refractive_index=1.0):
-        self.diffuse_color = color
-        self.albedo = albedo
+    def __init__(self, color: vec3ftype, albedo: vec4ftype = Vec4f(1,0,0,0), specular=1.5, refractive_index=1.0):
+        self.diffuse_color = Vec3f(color)
+        self.albedo = Vec4f(albedo)
         self.specular = specular
         self.refractive_index = refractive_index
 
 
 class Sphere:
 
-    def __init__(self, center: Vec3f, radius: float, material: Material):
-        self.center = center
+    def __init__(self, center: vec3ftype, radius: float, material: Material):
+        self.center = Vec3f(center)
         self.r = radius
         self.material = material
 
@@ -47,12 +53,15 @@ class Renderer:
 
     def render(self, spheres, lights):
         for j in range(self.height):
-            print(f'{j/self.height*100:.1f}%  \r')
+            stderr.write(f'\r{j/self.height*100:.1f}%  ')
+            stderr.flush()
             for i in range(self.width):
                 x = (2*(i + 0.5)/self.width - 1) * tan(self.fov/2) * self.width/self.height
                 y = (2*(j + 0.5)/self.height - 1) * tan(self.fov/2)
                 dir = Vec3f(x, y, -1).normalize()
                 self.framebuffer[i+j*self.width] = self._cast_ray(Vec3f(0,0,0), dir, spheres, lights)
+        stderr.write('\r      ')
+        stderr.flush()
         arr = []
         for i in range(self.height * self.width):
 

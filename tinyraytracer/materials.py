@@ -1,4 +1,4 @@
-from . import Material, Vec4f, Vec3f
+from tinyraytracer import Material, Vec4f, Vec3f
 
 
 ivory = Material(

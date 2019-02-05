@@ -6,15 +6,15 @@ if __name__ == '__main__':
     r = Renderer()
 
     spheres = [
-        Sphere(Vec3f(-3,    0,   -16), 2,      ivory),
-        Sphere(Vec3f(-1.0, -1.5, -12), 2,     mirror),
-        Sphere(Vec3f(-1.0, -1.5, -12), 2,      glass),
-        Sphere(Vec3f( 1.5, -0.5, -18), 3, red_rubber),
-        Sphere(Vec3f( 7,    5,   -18), 4,     mirror),
+        Sphere((-3,    0,   -16.0), 2,      ivory),
+        Sphere((-1.0, -1.5, -12.0), 2,     mirror),
+        Sphere((-1.0, -1.5, -12.0), 2,      glass),
+        Sphere(( 1.5, -0.5, -18.0), 3, red_rubber),
+        Sphere(( 7,    5,   -18.0), 4,     mirror),
     ]
 
     lights = [
-        Light(Vec3f(-20, 20, 20), 2),
+        Light((-20, 20, 20), 2),
     ]
 
     r.render(spheres, lights)

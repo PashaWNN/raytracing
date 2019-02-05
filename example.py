@@ -17,4 +17,5 @@ if __name__ == '__main__':
         Light((-20, 20, 20), 2),
     ]
 
-    r.render(spheres, lights)
+    im = r.render(spheres, lights)
+    im.show()

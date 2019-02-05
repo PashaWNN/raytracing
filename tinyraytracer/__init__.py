@@ -75,7 +75,7 @@ class Renderer:
 
         arr = reshape(arr, (self.height, self.width, 3))
         im = Image.fromarray(arr.astype('uint8'), mode='RGB')
-        im.show()
+        return im
 
     def _cast_ray(self, origin: Vec3f, direction: Vec3f, spheres, lights, depth=0):
         intersection, hit, N, material = self._scene_intersect(origin, direction, spheres)
